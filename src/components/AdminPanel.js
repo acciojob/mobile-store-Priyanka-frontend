@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-function AdminPanel({ products, addProduct, updateProduct, deleteProduct }) {
+function AdminPanel({
+  products,
+  addProduct,
+  updateProduct,
+  deleteProduct
+}) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
@@ -21,17 +26,17 @@ function AdminPanel({ products, addProduct, updateProduct, deleteProduct }) {
 
     if (editingId !== null) {
       updateProduct(editingId, {
-        name,
-        description,
-        image,
-        price: Number(price),
+        name: name,
+        description: description,
+        image: image,
+        price: Number(price)
       });
     } else {
       addProduct({
-        name,
-        description,
-        image,
-        price: Number(price),
+        name: name,
+        description: description,
+        image: image,
+        price: Number(price)
       });
     }
 
@@ -50,55 +55,66 @@ function AdminPanel({ products, addProduct, updateProduct, deleteProduct }) {
     <div className="admin">
       <h1>ADMIN</h1>
 
-      {/* ADD / EDIT FORM */}
       <form onSubmit={handleSubmit}>
         <input
           className="form-control"
-          value={name}
+          type="text"
           placeholder="Product Name"
+          value={name}
           onChange={(e) => setName(e.target.value)}
         />
 
         <input
           className="form-control"
-          value={description}
+          type="text"
           placeholder="Description"
+          value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
 
         <input
           className="form-control"
-          value={image}
+          type="text"
           placeholder="Image URL"
+          value={image}
           onChange={(e) => setImage(e.target.value)}
         />
 
         <input
           className="form-control"
-          value={price}
-          placeholder="Price"
           type="number"
+          placeholder="Price"
+          value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
 
-        <button type="submit">{editingId !== null ? "Save" : "Add"}</button>
+        <button type="submit">
+          {editingId !== null ? "Save" : "Add"}
+        </button>
       </form>
 
-      {/* PRODUCT LIST */}
       <div className="admin-products">
         {products.map((product) => (
           <div className="admin-product" key={product.id}>
-            <Link to={`/products/${product.id}`}>{product.name}</Link>
+            <Link to={`/products/${product.id}`}>
+              {product.name}
+            </Link>
 
-            <div>
-              <span>Price: {product.price}</span>
-            </div>
+            <button
+              type="button"
+              className="float-right"
+              onClick={() => deleteProduct(product.id)}
+            >
+              Delete
+            </button>
 
-            <div>
-              <button onClick={() => deleteProduct(product.id)}>Delete</button>
-
-              <button onClick={() => editProduct(product)}>Edit</button>
-            </div>
+            <button
+              type="button"
+              className="float-right"
+              onClick={() => editProduct(product)}
+            >
+              Edit
+            </button>
           </div>
         ))}
       </div>
