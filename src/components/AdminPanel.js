@@ -11,7 +11,6 @@ function AdminPanel({
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
-
   const [editingId, setEditingId] = useState(null);
 
   const clearForm = () => {
@@ -25,7 +24,7 @@ function AdminPanel({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (editingId) {
+    if (editingId !== null) {
       updateProduct(editingId, {
         name,
         description,
@@ -56,50 +55,56 @@ function AdminPanel({
     <div className="admin">
       <h1>ADMIN</h1>
 
+      {/* ADD / EDIT FORM */}
       <form onSubmit={handleSubmit}>
         <input
           className="form-control"
-          placeholder="Product Name"
           value={name}
+          placeholder="Product Name"
           onChange={(e) => setName(e.target.value)}
         />
 
         <input
           className="form-control"
-          placeholder="Description"
           value={description}
+          placeholder="Description"
           onChange={(e) => setDescription(e.target.value)}
         />
 
         <input
           className="form-control"
-          placeholder="Image URL"
           value={image}
+          placeholder="Image URL"
           onChange={(e) => setImage(e.target.value)}
         />
 
         <input
           className="form-control"
+          value={price}
           placeholder="Price"
           type="number"
-          value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
 
         <button type="submit">
-          {editingId ? "Save" : "Add"}
+          {editingId !== null ? "Save" : "Add"}
         </button>
       </form>
 
+      {/* PRODUCT LIST */}
       <div className="admin-products">
         {products.map((product) => (
           <div className="admin-product" key={product.id}>
+
             <Link to={`/products/${product.id}`}>
               {product.name}
             </Link>
 
-            <span>Price: {product.price}</span>
+            <span>
+              Price: {product.price}
+            </span>
 
+            {/* DELETE */}
             <button
               className="float-right"
               onClick={() => deleteProduct(product.id)}
@@ -107,12 +112,14 @@ function AdminPanel({
               Delete
             </button>
 
+            {/* EDIT */}
             <button
               className="float-right"
               onClick={() => editProduct(product)}
             >
               Edit
             </button>
+
           </div>
         ))}
       </div>
