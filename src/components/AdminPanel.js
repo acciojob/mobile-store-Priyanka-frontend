@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-function AdminPanel({
-  products,
-  addProduct,
-  updateProduct,
-  deleteProduct
-}) {
+function AdminPanel({ products, addProduct, updateProduct, deleteProduct }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
@@ -29,14 +24,14 @@ function AdminPanel({
         name,
         description,
         image,
-        price: Number(price)
+        price: Number(price),
       });
     } else {
       addProduct({
         name,
         description,
         image,
-        price: Number(price)
+        price: Number(price),
       });
     }
 
@@ -86,40 +81,24 @@ function AdminPanel({
           onChange={(e) => setPrice(e.target.value)}
         />
 
-        <button type="submit">
-          {editingId !== null ? "Save" : "Add"}
-        </button>
+        <button type="submit">{editingId !== null ? "Save" : "Add"}</button>
       </form>
 
       {/* PRODUCT LIST */}
       <div className="admin-products">
         {products.map((product) => (
           <div className="admin-product" key={product.id}>
+            <Link to={`/products/${product.id}`}>{product.name}</Link>
 
-            <Link to={`/products/${product.id}`}>
-              {product.name}
-            </Link>
+            <div>
+              <span>Price: {product.price}</span>
+            </div>
 
-            <span>
-              Price: {product.price}
-            </span>
+            <div>
+              <button onClick={() => deleteProduct(product.id)}>Delete</button>
 
-            {/* DELETE */}
-            <button
-              className="float-right"
-              onClick={() => deleteProduct(product.id)}
-            >
-              Delete
-            </button>
-
-            {/* EDIT */}
-            <button
-              className="float-right"
-              onClick={() => editProduct(product)}
-            >
-              Edit
-            </button>
-
+              <button onClick={() => editProduct(product)}>Edit</button>
+            </div>
           </div>
         ))}
       </div>
