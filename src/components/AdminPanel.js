@@ -26,16 +26,16 @@ function AdminPanel({
 
     if (editingId !== null) {
       updateProduct(editingId, {
-        name: name,
-        description: description,
-        image: image,
+        name,
+        description,
+        image,
         price: Number(price)
       });
     } else {
       addProduct({
-        name: name,
-        description: description,
-        image: image,
+        name,
+        description,
+        image,
         price: Number(price)
       });
     }
@@ -100,21 +100,25 @@ function AdminPanel({
               {product.name}
             </Link>
 
-            <button
-              type="button"
-              className="float-right"
-              onClick={() => deleteProduct(product.id)}
-            >
-              Delete
-            </button>
+            <div>
+              <button
+                type="button"
+                className="float-right"
+                onClick={() => deleteProduct(product.id)}
+              >
+                Delete
+              </button>
+            </div>
 
-            <button
-              type="button"
-              className="float-right"
-              onClick={() => editProduct(product)}
-            >
-              Edit
-            </button>
+            <div>
+              <button
+                type="button"
+                className="float-right"
+                onClick={() => editProduct(product)}
+              >
+                Edit
+              </button>
+            </div>
           </div>
         ))}
       </div>
